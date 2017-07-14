@@ -28,7 +28,7 @@ if (isset(Yii::$app->params['motd'])) {
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?= $form->field($model, 'rememberMe', [ 'template' => "" ])->hiddenInput() ?>
 
                 <div style="color:#999;margin:1em 0">
                     If you forgot your password you can <?= Html::a('reset it', ['/site/request-password-reset']);?>. 

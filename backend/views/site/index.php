@@ -7,12 +7,15 @@ $this->title = Yii::$app->params['siteTitle'];
 ?>
 <div class="site-index">
     <div class="body-content">
+
+<?php foreach ($events as $event) { ?>
+                                    
 		<div class="row">
 			<div class="col-lg-12">
 				<h1>Current Event: <?php echo Html::a($event->name, ['/event/view', 'id' => $event->id]);?></h1>
 				<h3><?= $event->shiftSummary;?></h3>
 				<?php echo GridView::widget([
-					'dataProvider' => $teams,
+					'dataProvider' => $teams[$event->id],
 					'layout' => '{items}',
 					'columns' => [
 						[
@@ -41,6 +44,9 @@ $this->title = Yii::$app->params['siteTitle'];
 			<?= Html::a("Copy Team from Previous Event", ['/team/copy', 'event_id' => $event->id], ['class' => 'btn btn-primary']);?>
 			</div>
 		</div>
+
+<?php } ?>                                     
+
     </div>
 </div>
 

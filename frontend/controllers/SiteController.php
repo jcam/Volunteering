@@ -77,14 +77,20 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-		$event = $this->loadEvent(Yii::$app->params['currentEvent']);
-		$dp = new ActiveDataProvider([
-			'query' => Team::find()->where(['event_id' => Yii::$app->params['currentEvent']]),
-			'pagination' => false,
-		]);
+        $currentEvents = Yii::$app->params['currentEvents'];
+        $events = array();
+        $dps = array();
+        foreach ($currentEvents as $eventId) {
+            $events[] = $this->loadEvent($eventId);
+            $dps[$eventId] = new ActiveDataProvider([
+                'query' => Team::find()->where(['event_id' => $eventId]),
+                'pagination' => false,
+            ]);
+        }
+
         return $this->render('index', [
-			'event' => $event,
-			'teams' => $dp,
+            'events' => $events,
+			'teams' => $dps,
 		]);
     }
 
@@ -131,7 +137,7 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+                if (Yii::$app->getUser()->login($user, 3600*24*3)) {
                     return $this->goHome();
                 }
             }

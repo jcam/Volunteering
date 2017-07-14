@@ -54,6 +54,28 @@ class TeamController extends Controller
         ]);
     }
 
+	public function actionGrid($id)
+	{
+    $model = $this->findModel($id);
+
+    $shiftnames = ['Kitchen'];
+
+    $shifts = [];
+
+    foreach($shiftnames as $shiftname):
+      $shifts[$shiftname] = new ActiveDataProvider([
+			'query' => Shift::find()->where(['team_id' => $id]),
+			'pagination' => false,
+		]);
+    endforeach;
+
+
+		return $this->render('grid', [
+			'event' => $model,
+      'shifts' => $shifts,
+		]);
+	}
+
     /**
      * Displays a single Team model.
      * @param integer $id

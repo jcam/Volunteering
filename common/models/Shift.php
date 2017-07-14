@@ -71,6 +71,8 @@ class Shift extends \yii\db\ActiveRecord
             'active' => 'Active',
             'requirement.name' => 'User Requirement',
 			'volunteerList' => 'Volunteers',
+			'volunteerNameList' => 'Volunteers',
+			'volunteerRealNameList' => 'Volunteers',
 			'filled' => 'Spots Filled',
         ];
     }
@@ -244,19 +246,11 @@ class Shift extends \yii\db\ActiveRecord
 			$classes .= ' btn-default disabled';
 			$title = "Shift Full";
 		}
-		elseif($this->requirement)
+		elseif(($this->requirement) && (!$this->meetsRequirement($user_id)))
 		{
 			$title = "Requires: " . Html::encode($this->requirement->name);
 			$url = ["shift/signup", "id" => $this->id];
-
-			if($this->meetsRequirement($user_id))
-			{
-				$classes .= " btn-primary";
-			}
-			else
-			{
-				$classes .= " btn-warning";
-			}
+			$classes .= " btn-warning";
 		}
 		else
 		{
@@ -330,6 +324,16 @@ class Shift extends \yii\db\ActiveRecord
 		foreach($this->participants as $p)
 		{
 			$output[] = Html::encode(!empty($p->user->burn_name) ? $p->user->burn_name : $p->user->real_name);
+		}
+		return implode("<br>\n", $output);
+	}
+
+	public function getVolunteerRealNameList()
+	{
+		$output = [];
+		foreach($this->participants as $p)
+		{
+			$output[] = Html::encode($p->user->real_name);
 		}
 		return implode("<br>\n", $output);
 	}

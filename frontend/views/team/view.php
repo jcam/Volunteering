@@ -38,6 +38,10 @@ $this->title = $event->name . " - " . $team->name;
 				return $model->generateSignupLink(Yii::$app->user->id);
 			},
 		],
+		[
+			'attribute' => 'volunteerNameList',
+			'format' => 'raw',
+		],
 	],
 ]);?>
 <?php endforeach;?>

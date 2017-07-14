@@ -23,7 +23,7 @@ use yii\helpers\Html;
 			},
 		],
 		[
-			'attribute' => 'volunteerList',
+			'attribute' => 'volunteerNameList',
 			'format' => 'raw',
 		],
 	],

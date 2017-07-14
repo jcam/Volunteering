@@ -46,14 +46,20 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-		$event = $this->loadEvent(Yii::$app->params['currentEvent']);
-		$dp = new ActiveDataProvider([
-			'query' => Team::find()->where(['event_id' => Yii::$app->params['currentEvent']]),
-			'pagination' => false,
-		]);
+        $currentEvents = Yii::$app->params['currentEvents'];
+        $events = array();
+        $dps = array();
+        foreach ($currentEvents as $eventId) {
+            $events[] = $this->loadEvent($eventId);
+            $dps[$eventId] = new ActiveDataProvider([
+                'query' => Team::find()->where(['event_id' => $eventId]),
+                'pagination' => false,
+            ]);
+        }
+
         return $this->render('index', [
-			'event' => $event,
-			'teams' => $dp,
+            'events' => $events,
+			'teams' => $dps,
 		]);
     }
 

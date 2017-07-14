@@ -22,12 +22,12 @@ $this->title = $event->name . " Schedule";
 		'title',
 		[
 			'label' => 'Volunteers',
-			'attribute' => 'volunteerList',
+			'attribute' => 'volunteerNameList',
 			'format' => 'raw',
 		],
 		[
-			'label' => 'Volunteer Names',
-			'attribute' => 'volunteerNameList',
+			'label' => 'Real Names',
+			'attribute' => 'volunteerRealNameList',
 			'format' => 'raw',
 		],
 		[

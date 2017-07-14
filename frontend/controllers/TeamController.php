@@ -63,23 +63,6 @@ class TeamController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-		$dp = new ActiveDataProvider([
-			'query' => Team::find()->where(['event_id' => Yii::$app->params['currentEvent']]),
-			'pagination' => false,
-		]);
-
-        return $this->render('index', [
-			'teams' => $dp,
-		]);
-    }
-
 	public function actionView($id)
 	{
 		$team = $this->findModel($id);
